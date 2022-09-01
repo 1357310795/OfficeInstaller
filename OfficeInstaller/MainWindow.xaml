@@ -1,0 +1,22 @@
+﻿<Window
+    x:Class="OfficeInstaller.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:OfficeInstaller"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="SJTU 正版软件 - Office 2021 一键安装工具"
+    Width="600"
+    Height="600"
+    mc:Ignorable="d" Icon="/Images/office.ico">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Border Background="#ae1613" >
+            <Image Source="/Images/logo.png" Margin="10" Height="50"/>
+        </Border>
+        <Frame x:Name="MainFrame" Grid.Row="1" JournalOwnership="UsesParentJournal"/>
+    </Grid>
+</Window>
