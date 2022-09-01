@@ -69,15 +69,15 @@ namespace OfficeInstaller.Services
                 XmlElement visio = doc.CreateElement("Product");
                 visio.SetAttribute("ID", "VisioPro2021Volume");
                 visio.AppendChild(GetLangNode(doc));
-                add.AppendChild(main);
+                add.AppendChild(visio);
             }
 
             if (Project)
             {
-                XmlElement visio = doc.CreateElement("Product");
-                visio.SetAttribute("ID", "ProjectPro2021Volume");
-                visio.AppendChild(GetLangNode(doc));
-                add.AppendChild(main);
+                XmlElement project = doc.CreateElement("Product");
+                project.SetAttribute("ID", "ProjectPro2021Volume");
+                project.AppendChild(GetLangNode(doc));
+                add.AppendChild(project);
             }
 
             root.AppendChild(add);

@@ -53,18 +53,47 @@ namespace OfficeInstaller.Pages
         public void Go()
         {
             AddLog("安装开始");
-            var xml = Config.Default.GetXml();
-            var tmpfolder = Path.GetTempPath();
-            var filepath = Path.Combine(tmpfolder, "config.xml");
-            xml.Save(filepath);
-            AddLog($"成功导出配置文件：{filepath}");
-            ProcessStartInfo psi = new ProcessStartInfo();
-            psi.Arguments = "/configure " + filepath;
-            psi.FileName = Path.Combine(Process.GetCurrentProcess().MainModule.FileName, @"Data\setup.exe");
-            var p = Process.Start(psi);
-            AddLog($"安装程序启动成功");
-            p.WaitForExit();
-            AddLog($"安装完成");
+            string filepath = "";
+            try
+            {
+                var xml = Config.Default.GetXml();
+                var tmpfolder = Path.GetTempPath();
+                filepath = Path.Combine(tmpfolder, "config.xml");
+                xml.Save(filepath);
+                AddLog($"成功导出配置文件：{filepath}");
+            }
+            catch(Exception ex)
+            {
+                AddLog($"生成配置文件失败！\n{ex.Message}");
+                return;
+            }
+            Process p = null;
+            try
+            {
+                ProcessStartInfo psi = new ProcessStartInfo();
+                psi.Arguments = "/configure " + filepath;
+                var exepath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Data\setup.exe");
+                AddLog($"安装程序路径：{exepath}");
+                psi.FileName = exepath;
+                psi.CreateNoWindow = true;
+                p = Process.Start(psi);
+                AddLog($"安装程序启动成功");
+            }
+            catch(Exception ex)
+            {
+                AddLog($"安装程序启动失败！\n{ex.Message}");
+                return;
+            }
+            try
+            {
+                p.WaitForExit();
+                AddLog($"安装完成");
+            }
+           catch(Exception ex)
+            {
+                AddLog($"安装失败！\n{ex.Message}");
+                return;
+            }
         }
 
         public void AddLog(string str)
