@@ -55,9 +55,9 @@ namespace OfficeInstaller.Pages
 
         public void Run()
         {
-            CancelService.IsRunning = true;
+            StateService.IsRunning = true;
             Install();
-            CancelService.IsRunning = false;
+            StateService.IsRunning = false;
             if (result)
                 this.Dispatcher.Invoke(() => {
                     Navigation.Navigate(new ResultPage());
@@ -73,43 +73,62 @@ namespace OfficeInstaller.Pages
 
         public void Install()
         {
-            
-            AddLog("安装开始");
             string filepath = "";
+            string setuppath = "";
+            string vlmcspath = "";
             var tmpfolder = Path.GetTempPath();
+
+            AddLog("安装开始");
+
             try
             {
+                AddLog($"正在导出配置文件");
                 var xml = Config.Default.GetXml();
                 filepath = Path.Combine(tmpfolder, "config.xml");
                 xml.Save(filepath);
-                AddLog($"成功导出配置文件：{filepath}");
+                AddLog($"导出配置文件成功：{filepath}");
             }
             catch (Exception ex)
             {
                 AddLog($"生成配置文件失败！\n{ex.Message}");
                 return;
             }
-            string exepath = "";
+
             try
             {
-                var uristr = "pack://application:,,,/OfficeInstaller;component/setup.exe";
-                var uri = new Uri(uristr, UriKind.RelativeOrAbsolute);
-                var stream = Application.GetResourceStream(uri).Stream;
-                exepath = Path.Combine(tmpfolder, "OfficeSetup.exe");
-                if (!File.Exists(exepath))
+                AddLog($"正在解压资源");
+                var setupres = "pack://application:,,,/OfficeInstaller;component/setup.exe";
+                var setupuri = new Uri(setupres, UriKind.RelativeOrAbsolute);
+                var setupstream = Application.GetResourceStream(setupuri).Stream;
+                setuppath = Path.Combine(tmpfolder, "OfficeSetup.exe");
+                if (!File.Exists(setuppath))
                 {
-                    using (var fileStream = File.Create(exepath))
+                    using (var fileStream = File.Create(setuppath))
                     {
-                        stream.Seek(0, SeekOrigin.Begin);
-                        stream.CopyTo(fileStream);
+                        setupstream.Seek(0, SeekOrigin.Begin);
+                        setupstream.CopyTo(fileStream);
                         fileStream.Close();
                     }
                 }
-                AddLog($"安装程序创建成功！");
+
+                var vlmcsres = "pack://application:,,,/OfficeInstaller;component/vlmcs.exe";
+                var vlmcsuri = new Uri(vlmcsres, UriKind.RelativeOrAbsolute);
+                var vlmcsstream = Application.GetResourceStream(setupuri).Stream;
+                vlmcspath = Path.Combine(tmpfolder, "vlmcs.exe");
+                if (!File.Exists(vlmcspath))
+                {
+                    using (var fileStream = File.Create(vlmcspath))
+                    {
+                        setupstream.Seek(0, SeekOrigin.Begin);
+                        setupstream.CopyTo(fileStream);
+                        fileStream.Close();
+                    }
+                }
+                AddLog($"解压资源成功！");
             }
             catch (Exception ex)
             {
-                AddLog($"安装程序创建失败！\n{ex.ToString()}");
+                AddLog($"解压资源失败！\n{ex.ToString()}");
                 return;
             }
             //return;
@@ -118,8 +137,8 @@ namespace OfficeInstaller.Pages
             {
                 ProcessStartInfo psi = new ProcessStartInfo();
                 psi.Arguments = "/configure " + filepath;
-                AddLog($"安装程序路径：{exepath}");
-                psi.FileName = exepath;
+                AddLog($"安装程序路径：{setuppath}");
+                psi.FileName = setuppath;
                 psi.CreateNoWindow = true;
                 psi.WindowStyle = ProcessWindowStyle.Hidden;
                 p = Process.Start(psi);
@@ -140,6 +159,29 @@ namespace OfficeInstaller.Pages
             catch (Exception ex)
             {
                 AddLog($"安装失败！\n{ex.Message}");
+                return;
+            }
+            try
+            {
+                AddLog($"正在检测 KMS 服务器可用性");
+                CommandRunner cr = new CommandRunner(vlmcspath);
+                var res = cr.Run("kms.sjtu.edu.cn");
+                if (res != null && res.ToLower().Contains("success"))
+                {
+                    AddLog(res);
+                    AddLog($"KMS 服务器可用！");
+                    StateService.KMSOK = true;
+                }
+                else
+                {
+                    AddLog(res);
+                    AddLog($"KMS 服务器不可用！");
+                    StateService.KMSOK = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                AddLog($"检测 KMS 服务器可用性失败！\n{ex.Message}");
                 return;
             }
             try

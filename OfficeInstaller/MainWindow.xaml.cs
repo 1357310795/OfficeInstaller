@@ -18,7 +18,7 @@ namespace OfficeInstaller
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (CancelService.IsRunning)
+            if (StateService.IsRunning)
             {
                 e.Cancel = true;
                 MessageBox.Show("请耐心等待安装完成！");

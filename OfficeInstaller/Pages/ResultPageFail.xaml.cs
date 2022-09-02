@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -58,6 +59,11 @@ namespace OfficeInstaller.Pages
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Navigation.Navigate(new WelcomePage());
+        }
+
+        private void ButtonFeedback_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start("explorer", "https://shuiyuan.sjtu.edu.cn/c/23-category/106-category/106");
         }
     }
 }

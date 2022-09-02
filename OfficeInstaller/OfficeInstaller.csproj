@@ -185,7 +185,9 @@
   <ItemGroup>
     <Resource Include="Images\office.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="vlmcs.exe" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="setup.exe" />
   </ItemGroup>

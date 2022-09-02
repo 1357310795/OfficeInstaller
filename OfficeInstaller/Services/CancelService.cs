@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace OfficeInstaller.Services
 {
-    public class CancelService
+    public class StateService
     {
         public static bool IsRunning { get; set; }
+        public static bool KMSOK { get; set; }
     }
 }
