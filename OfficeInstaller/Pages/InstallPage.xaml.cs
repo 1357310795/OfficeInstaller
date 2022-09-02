@@ -113,14 +113,14 @@ namespace OfficeInstaller.Pages
 
                 var vlmcsres = "pack://application:,,,/OfficeInstaller;component/vlmcs.exe";
                 var vlmcsuri = new Uri(vlmcsres, UriKind.RelativeOrAbsolute);
-                var vlmcsstream = Application.GetResourceStream(setupuri).Stream;
+                var vlmcsstream = Application.GetResourceStream(vlmcsuri).Stream;
                 vlmcspath = Path.Combine(tmpfolder, "vlmcs.exe");
                 if (!File.Exists(vlmcspath))
                 {
                     using (var fileStream = File.Create(vlmcspath))
                     {
-                        setupstream.Seek(0, SeekOrigin.Begin);
-                        setupstream.CopyTo(fileStream);
+                        vlmcsstream.Seek(0, SeekOrigin.Begin);
+                        vlmcsstream.CopyTo(fileStream);
                         fileStream.Close();
                     }
                 }
