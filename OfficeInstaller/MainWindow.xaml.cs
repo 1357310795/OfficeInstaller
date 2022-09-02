@@ -15,5 +15,14 @@ namespace OfficeInstaller
             Navigation.SetFrame(MainFrame);
             Navigation.Navigate(new WelcomePage());
         }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (CancelService.IsRunning)
+            {
+                e.Cancel = true;
+                MessageBox.Show("请耐心等待安装完成！");
+            }
+        }
     }
 }

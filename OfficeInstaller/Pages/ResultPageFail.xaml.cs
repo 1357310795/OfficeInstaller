@@ -1,5 +1,7 @@
-﻿using System;
+﻿using OfficeInstaller.Services;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,11 +20,44 @@ namespace OfficeInstaller.Pages
     /// <summary>
     /// ResultPage.xaml 的交互逻辑
     /// </summary>
-    public partial class ResultPageFail : Page
+    public partial class ResultPageFail : Page, INotifyPropertyChanged
     {
         public ResultPageFail()
         {
             InitializeComponent();
+            this.DataContext = this;
+        }
+
+        public List<string> Logs
+        {
+            get { return LogService.Logs; }
+        }
+
+
+        #region INotifyPropertyChanged members
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void RaisePropertyChanged(string propertyName)
+        {
+            PropertyChangedEventHandler handler = this.PropertyChanged;
+            if (handler != null)
+            {
+                var e = new PropertyChangedEventArgs(propertyName);
+                handler(this, e);
+            }
+        }
+
+        #endregion
+
+        private void ButtonClose_Click(object sender, RoutedEventArgs e)
+        {
+            App.Current.Shutdown();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.Navigate(new WelcomePage());
         }
     }
 }

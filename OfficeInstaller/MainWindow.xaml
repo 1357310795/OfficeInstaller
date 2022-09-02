@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="SJTU 正版软件 - Office 2021 一键安装工具"
     Width="600"
-    Height="600"
+    Height="600" Closing="Window_Closing"
     mc:Ignorable="d" Icon="/Images/office.ico">
     <Grid>
         <Grid.RowDefinitions>
