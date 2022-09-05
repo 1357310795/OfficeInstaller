@@ -206,8 +206,5 @@
   <ItemGroup>
     <Resource Include="setup.exe" />
   </ItemGroup>
-  <ItemGroup>
-    <Resource Include="OSPP.VBS" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
