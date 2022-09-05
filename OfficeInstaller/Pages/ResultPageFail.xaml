@@ -20,7 +20,7 @@
         <TextBlock HorizontalAlignment="Center"
                    Grid.Row="1"
                    Foreground="{StaticResource MainBrush}"
-                   Text="安装失败"
+                   Text="{DynamicResource InstallFailTitle}"
                    FontSize="48" FontFamily="Microsoft Yahei UI Light" />
         <ListBox Margin="10,20"
                  Grid.Row="2"
@@ -32,21 +32,21 @@
                     Orientation="Horizontal">
             <Button Width="160" Height="40"
                     Margin="0,0,0,0"
-                    Content="关闭程序"
+                    Content="{DynamicResource CloseApp}"
                     Click="ButtonClose_Click"
                     Style="{DynamicResource ButtonStyle1}"
                     FontSize="16" />
             <Button Width="160" Height="40"
                     Margin="10,0,0,0"
                     Grid.Row="3"
-                    Content="返回首页"
+                    Content="{DynamicResource GoIndex}"
                     Click="Button_Click"
                     Style="{DynamicResource ButtonStyle1}"
                     FontSize="16" />
             <Button Width="160" Height="40"
                     Margin="10,0,0,0"
                     Grid.Row="3"
-                    Content="去论坛反馈"
+                    Content="{DynamicResource Feedback}"
                     Click="ButtonFeedback_Click"
                     Style="{DynamicResource ButtonStyle1}"
                     FontSize="16" />

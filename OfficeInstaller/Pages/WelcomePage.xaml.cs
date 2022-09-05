@@ -1,4 +1,5 @@
-﻿using OfficeInstaller.Services;
+﻿using OfficeInstaller.Helpers;
+using OfficeInstaller.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,16 @@ namespace OfficeInstaller.Pages
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Navigation.Navigate(new InstallPage());
+        }
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            LangHelper.ChangeLang(true);
+        }
+
+        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            LangHelper.ChangeLang(false);
         }
     }
 }

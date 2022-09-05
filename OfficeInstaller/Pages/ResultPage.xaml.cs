@@ -1,4 +1,5 @@
-﻿using OfficeInstaller.Services;
+﻿using OfficeInstaller.Helpers;
+using OfficeInstaller.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -28,13 +29,13 @@ namespace OfficeInstaller.Pages
             this.DataContext = this;
             if (StateService.KMSOK)
             {
-                Message = "已安装并激活 Office";
-                Info = "若显示未激活，请连接到校园网，重启 Office 应用程序即可。";
+                Message = LangHelper.GetStr("InstalledAndActed");
+                Info = LangHelper.GetStr("InstalledAndActedTip");
             }
             else
             {
-                Message = "已安装 Office";
-                Info = "当前交大 KMS 服务器不可用，请连接到校园网，Office 应用程序将自动激活。";
+                Message = LangHelper.GetStr("Installed");
+                Info = LangHelper.GetStr("InstalledTip");
             } 
         }
 

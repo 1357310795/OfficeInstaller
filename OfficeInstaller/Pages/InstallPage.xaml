@@ -22,11 +22,11 @@
             <TextBlock VerticalAlignment="Center"
                        Margin="5,0,0,0"
                        Foreground="#cf3900"
-                       Text="正在安装 Office"
+                       Text="{DynamicResource Installing}"
                        FontSize="30" FontFamily="Microsoft Yahei UI" />
         </StackPanel>
         <ProgressBar Style="{DynamicResource ProgressBarStyle1}" IsIndeterminate="True" Grid.Row="3" Height="20"/>
-        <TextBlock Text="安装过程无法取消，请耐心等待！请不要关闭计算机电源！" Margin="0,5" HorizontalAlignment="Center" Grid.Row="2"/>
+        <TextBlock Text="{DynamicResource InstallTip}" Margin="0,5" HorizontalAlignment="Center" Grid.Row="2"/>
         <ListBox ItemContainerStyle="{DynamicResource ListBoxItemContainerStyle1}" Style="{DynamicResource ListBoxStyle1}" ItemsSource="{Binding Logs}" Grid.Row="1"/>
     </Grid>
 </Page>

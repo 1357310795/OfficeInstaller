@@ -24,14 +24,14 @@ namespace OfficeInstaller.Services
         public bool Project { get; set; }
 
         public bool X64 { get; set; } = true;
-        public bool Chinese { get; set; } = true;
+        public bool Eng { get; set; } = false;
 
         public XmlDocument GetXml()
         {
             XmlElement GetLangNode(XmlDocument doc1)
             {
                 XmlElement lang = doc1.CreateElement("Language");
-                lang.SetAttribute("ID", Chinese ? "zh-cn" : "en-us");
+                lang.SetAttribute("ID", Eng ? "en-us" : "zh-cn");
                 return lang;
             }
 

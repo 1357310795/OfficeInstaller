@@ -29,6 +29,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"
                     Margin="0,0,0,20"
@@ -41,15 +42,7 @@
                        FontSize="50" FontFamily="Segeo UI Light" />
         </StackPanel>
         <Grid Grid.Row="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-            <Border Width="260"
+            <Border Width="380"
                     Margin="8"
                     Grid.RowSpan="2"
                     Style="{StaticResource GroupBoxStyle}">
@@ -57,21 +50,24 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition />
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <StackPanel Orientation="Vertical">
                         <CheckBox Content="PowerPoint" IsChecked="{Binding PowerPoint}" />
-                        <CheckBox Content="Word" IsChecked="{Binding Word}" />
-                        <CheckBox Content="Excel" IsChecked="{Binding Excel}" />
-                        <CheckBox Content="Access" IsChecked="{Binding Access}" />
+                        <CheckBox Content="Visio" IsChecked="{Binding Visio}" />
                         <CheckBox Content="Lync" IsChecked="{Binding Lync}" />
                         <CheckBox Content="OneDrive" IsChecked="{Binding OneDrive}" />
                     </StackPanel>
                     <StackPanel Grid.Column="1" Orientation="Vertical">
-                        <CheckBox Content="OneNote" IsChecked="{Binding OneNote}" />
+                        <CheckBox Content="Word" IsChecked="{Binding Word}" />
+                        <CheckBox Content="Access" IsChecked="{Binding Access}" />
                         <CheckBox Content="Outlook" IsChecked="{Binding Outlook}" />
                         <CheckBox Content="Publisher" IsChecked="{Binding Publisher}" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="2" Orientation="Vertical">
+                        <CheckBox Content="Excel" IsChecked="{Binding Excel}" />
+                        <CheckBox Content="OneNote" IsChecked="{Binding OneNote}" />
                         <CheckBox Content="Teams" IsChecked="{Binding Teams}" />
-                        <CheckBox Content="Visio" IsChecked="{Binding Visio}" />
                         <CheckBox Content="Project" IsChecked="{Binding Project}" />
                     </StackPanel>
                 </Grid>
@@ -80,49 +76,36 @@
                        Margin="24,0,0,0"
                        Grid.RowSpan="2"
                        Background="White"
-                       Text=" 产品选择 "
-                       FontSize="14" />
-            <Border Width="120"
-                    Margin="8"
-                    Grid.Row="0" Grid.Column="1"
-                    Style="{StaticResource GroupBoxStyle}">
-                <StackPanel Margin="15,10,10,10"
-                            Grid.Column="1"
-                            Orientation="Vertical">
-                    <RadioButton Content="32 位" GroupName="Arch"/>
-                    <RadioButton Content="64 位" GroupName="Arch" IsChecked="{Binding X64}"/>
-                </StackPanel>
-            </Border>
-            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top"
-                       Margin="24,0,0,0"
-                       Grid.Column="1"
-                       Background="White"
-                       Text=" 体系架构 "
-                       FontSize="14" />
-            <Border Width="120"
-                    Margin="8"
-                    Grid.Row="1" Grid.Column="1"
-                    Style="{StaticResource GroupBoxStyle}">
-                <StackPanel Margin="15,10,10,10"
-                            Grid.Column="1"
-                            Orientation="Vertical">
-                    <RadioButton Content="中文" GroupName="Lang" IsChecked="{Binding Chinese}"/>
-                    <RadioButton Content="English" GroupName="Lang"/>
-                </StackPanel>
-            </Border>
-
-            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top"
-                       Margin="24,0,0,0"
-                       Grid.Row="1" Grid.Column="1"
-                       Background="White"
-                       Text=" 语言 "
-                       FontSize="14" />
+                       FontSize="14">
+                <Run Text="" />
+                <Run Text="{DynamicResource SelectProducts}" />
+                <Run Text="" />
+            </TextBlock>
         </Grid>
+        <StackPanel HorizontalAlignment="Center"
+                    Margin="0,10"
+                    Grid.Row="2"
+                    Orientation="Horizontal">
+            <TextBlock VerticalAlignment="Center"
+                       Text="中文"
+                       FontSize="16" />
+            <CheckBox VerticalAlignment="Center"
+                      Margin="10,0"
+                      IsChecked="{Binding Eng}" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked"
+                      Style="{StaticResource ToggleStyle}">
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="1.0" ScaleY="1.0" />
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+            <TextBlock VerticalAlignment="Center"
+                       Text="English"
+                       FontSize="16" />
+        </StackPanel>
         <Button Width="240" Height="60"
                 Margin="10,20"
-                Grid.Row="2"
-                Content="一键安装&amp;激活"
-                Style="{DynamicResource ButtonStyle1}"
+                Grid.Row="3"
+                Content="{DynamicResource InstallAndAct}"
+                Style="{DynamicResource ButtonStyle2}"
                 Click="Button_Click"
                 FontSize="20" />
     </Grid>

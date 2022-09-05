@@ -7,12 +7,14 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/zh-cn.xaml" />
                 <ResourceDictionary Source="Resources/Dictionary1.xaml" />
                 <ResourceDictionary Source="Styles/Buttons.xaml" />
                 <ResourceDictionary Source="Styles/CheckBoxs.xaml" />
                 <ResourceDictionary Source="Styles/ProgressBars.xaml" />
                 <ResourceDictionary Source="Styles/ListBoxs.xaml" />
                 <ResourceDictionary Source="Styles/RadioButtons.xaml" />
+                <ResourceDictionary Source="Styles/Toggles.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
