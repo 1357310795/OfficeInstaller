@@ -1,4 +1,4 @@
 ## WPF UI Exercise
-![image.png](https://s2.loli.net/2022/09/01/tCS3QkbZJ9OP6Lr.png)
+![Screenshot 2022-09-05 213138.png](https://s2.loli.net/2022/09/05/pBhevjbif43DZNQ.png)
 ***
 功能也是有用的！
