@@ -1,4 +1,6 @@
-﻿using System;
+﻿using OfficeInstaller.Helpers;
+using OfficeInstaller.Services;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -17,6 +19,8 @@ namespace OfficeInstaller
         {
             base.OnStartup(e);
             this.DispatcherUnhandledException += App_DispatcherUnhandledException;
+            if (OSHelper.GetOSBit() == 64)
+                Config.Default.X64 = true;
         }
 
         private void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)

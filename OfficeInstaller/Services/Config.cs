@@ -23,7 +23,7 @@ namespace OfficeInstaller.Services
         public bool Visio { get; set; } = false;
         public bool Project { get; set; }
 
-        public bool X64 { get; set; } = true;
+        public bool X64 { get; set; }
         public bool Eng { get; set; } = false;
 
         public XmlDocument GetXml()

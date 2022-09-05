@@ -63,6 +63,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -84,6 +85,7 @@
     <Compile Include="Controls\ClippingBorder.cs" />
     <Compile Include="Helpers\CommandRunner.cs" />
     <Compile Include="Helpers\LangHelper.cs" />
+    <Compile Include="Helpers\OSHelper.cs" />
     <Compile Include="Pages\ResultPageFail.xaml.cs">
       <DependentUpon>ResultPageFail.xaml</DependentUpon>
     </Compile>
@@ -203,6 +205,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="setup.exe" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="OSPP.VBS" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -73,6 +73,7 @@ namespace OfficeInstaller.Pages
             string filepath = "";
             string setuppath = "";
             string vlmcspath = "";
+            string ospppath = Path.Combine(OSHelper.GetProgramFiles(), @"Microsoft Office\Office16\ospp.vbs");
             var tmpfolder = Path.GetTempPath();
 
             AddLog(LangHelper.GetStr("InstallStart"));
@@ -121,6 +122,20 @@ namespace OfficeInstaller.Pages
                         fileStream.Close();
                     }
                 }
+
+                //var osppres = "pack://application:,,,/OfficeInstaller;component/ospp.vbs";
+                //var osppuri = new Uri(osppres, UriKind.RelativeOrAbsolute);
+                //var osppstream = Application.GetResourceStream(osppuri).Stream;
+                //ospppath = Path.Combine(tmpfolder, "ospp.vbs");
+                //if (!File.Exists(ospppath))
+                //{
+                //    using (var fileStream = File.Create(ospppath))
+                //    {
+                //        osppstream.Seek(0, SeekOrigin.Begin);
+                //        osppstream.CopyTo(fileStream);
+                //        fileStream.Close();
+                //    }
+                //}
                 AddLog(LangHelper.GetStr("ExtractExeSucc"));
             }
             catch (Exception ex)
@@ -185,12 +200,9 @@ namespace OfficeInstaller.Pages
             {
                 AddLog(LangHelper.GetStr("Activating"));
                 CommandRunner cr = new CommandRunner("cscript");
-                var ospp = Path.Combine(Environment.GetFolderPath(
-                    Environment.SpecialFolder.ProgramFiles
-                    ), @"Microsoft Office\Office16\ospp.vbs");
-                if (!File.Exists(ospp))
-                    throw new Exception($"{LangHelper.GetStr("OSPP")}{ospp}");
-                var res = cr.Run($"\"{ospp}\" /sethst:kms.sjtu.edu.cn");
+                if (!File.Exists(ospppath))
+                    throw new Exception($"{LangHelper.GetStr("OSPP")}{ospppath}");
+                var res = cr.Run($"\"{ospppath}\" /sethst:kms.sjtu.edu.cn");
                 if (res != null && res.ToLower().Contains("success"))
                 {
                     AddLog(res);

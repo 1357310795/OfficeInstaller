@@ -18,9 +18,11 @@
         </Grid.RowDefinitions>
         <Image Width="80" Source="{StaticResource closeDrawingImage}" />
         <TextBlock HorizontalAlignment="Center"
+                   TextWrapping="Wrap"
                    Grid.Row="1"
                    Foreground="{StaticResource MainBrush}"
                    Text="{DynamicResource InstallFailTitle}"
+                   TextAlignment="Center"
                    FontSize="48" FontFamily="Microsoft Yahei UI Light" />
         <ListBox Margin="10,20"
                  Grid.Row="2"
