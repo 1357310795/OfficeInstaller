@@ -201,10 +201,14 @@
     <Resource Include="Images\office.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="vlmcs.exe" />
+    <None Include="Data\vlmcs.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="setup.exe" />
+    <None Include="Data\setup.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
