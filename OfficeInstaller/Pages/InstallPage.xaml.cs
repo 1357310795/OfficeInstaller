@@ -71,10 +71,9 @@ namespace OfficeInstaller.Pages
         public void Install()
         {
             string filepath = "";
-            var basepath = System.AppDomain.CurrentDomain.BaseDirectory;
-            var vlmcspath = Path.Combine(basepath, @"data\vlmcs.exe");
-            var setuppath = Path.Combine(basepath, @"data\setup.exe");
-            string ospppath = Path.Combine(OSHelper.GetProgramFiles(), @"Microsoft Office\Office16\ospp.vbs");
+            var vlmcspath = Path.Combine(Config.Default.DataPath, @"vlmcs.exe");
+            var setuppath = Path.Combine(Config.Default.DataPath, @"setup.exe");
+            
             var tmpfolder = Path.GetTempPath();
 
             AddLog(LangHelper.GetStr("InstallStart"));
@@ -93,58 +92,6 @@ namespace OfficeInstaller.Pages
                 return;
             }
 
-            //try
-            //{
-            //    AddLog(LangHelper.GetStr("ExtractExe"));
-            //    var setupres = "pack://application:,,,/OfficeInstaller;component/setup.exe";
-            //    var setupuri = new Uri(setupres, UriKind.RelativeOrAbsolute);
-            //    var setupstream = Application.GetResourceStream(setupuri).Stream;
-            //    setuppath = Path.Combine(tmpfolder, "OfficeSetup.exe");
-            //    if (!File.Exists(setuppath))
-            //    {
-            //        using (var fileStream = File.Create(setuppath))
-            //        {
-            //            setupstream.Seek(0, SeekOrigin.Begin);
-            //            setupstream.CopyTo(fileStream);
-            //            fileStream.Close();
-            //        }
-            //    }
-
-            //    var vlmcsres = "pack://application:,,,/OfficeInstaller;component/vlmcs.exe";
-            //    var vlmcsuri = new Uri(vlmcsres, UriKind.RelativeOrAbsolute);
-            //    var vlmcsstream = Application.GetResourceStream(vlmcsuri).Stream;
-            //    vlmcspath = Path.Combine(tmpfolder, "vlmcs.exe");
-            //    if (!File.Exists(vlmcspath))
-            //    {
-            //        using (var fileStream = File.Create(vlmcspath))
-            //        {
-            //            vlmcsstream.Seek(0, SeekOrigin.Begin);
-            //            vlmcsstream.CopyTo(fileStream);
-            //            fileStream.Close();
-            //        }
-            //    }
-
-            //    //var osppres = "pack://application:,,,/OfficeInstaller;component/ospp.vbs";
-            //    //var osppuri = new Uri(osppres, UriKind.RelativeOrAbsolute);
-            //    //var osppstream = Application.GetResourceStream(osppuri).Stream;
-            //    //ospppath = Path.Combine(tmpfolder, "ospp.vbs");
-            //    //if (!File.Exists(ospppath))
-            //    //{
-            //    //    using (var fileStream = File.Create(ospppath))
-            //    //    {
-            //    //        osppstream.Seek(0, SeekOrigin.Begin);
-            //    //        osppstream.CopyTo(fileStream);
-            //    //        fileStream.Close();
-            //    //    }
-            //    //}
-            //    AddLog(LangHelper.GetStr("ExtractExeSucc"));
-            //}
-            //catch (Exception ex)
-            //{
-            //    AddLog($"{LangHelper.GetStr("ExtractExeFail")}\n{ex.ToString()}");
-            //    return;
-            //}
-            //return;
             Process p = null;
             try
             {
@@ -201,6 +148,7 @@ namespace OfficeInstaller.Pages
             {
                 AddLog(LangHelper.GetStr("Activating"));
                 CommandRunner cr = new CommandRunner("cscript");
+                string ospppath = Path.Combine(OSHelper.GetProgramFiles(), @"Microsoft Office\Office16\ospp.vbs");
                 if (!File.Exists(ospppath))
                     throw new Exception($"{LangHelper.GetStr("OSPP")}{ospppath}");
                 var res = cr.Run($"\"{ospppath}\" /sethst:kms.sjtu.edu.cn");

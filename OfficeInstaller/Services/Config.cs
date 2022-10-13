@@ -26,6 +26,8 @@ namespace OfficeInstaller.Services
         public bool X64 { get; set; }
         public bool Eng { get; set; } = false;
 
+        public string DataPath { get; set; }
+
         public XmlDocument GetXml()
         {
             XmlElement GetLangNode(XmlDocument doc1)

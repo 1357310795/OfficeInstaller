@@ -50,6 +50,20 @@ namespace OfficeInstaller
                     return;
                 }
             }
+            try
+            {
+                var tmppath = Path.Combine(Path.GetTempPath(), $"{Path.GetRandomFileName()}");
+                Config.Default.DataPath = tmppath;
+                Directory.CreateDirectory(tmppath);
+                File.Copy(vlmcs, Path.Combine(tmppath, "vlmcs.exe"));
+                File.Copy(setup, Path.Combine(tmppath, "setup.exe"));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("文件复制失败，请重新下载、解压整个文件夹，再运行程序！如果还是不行，请重启电脑！");
+                App.Current.Shutdown();
+                return;
+            }
         }
 
         private void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
