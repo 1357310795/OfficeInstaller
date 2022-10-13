@@ -31,6 +31,8 @@
     <sys:String x:Key="ActFail">激活失败！</sys:String>
 
     <sys:String x:Key="InstallFailTitle">安装失败</sys:String>
+    <sys:String x:Key="ActivateFailTitle">激活失败</sys:String>
+    <sys:String x:Key="ReActivate">重新激活</sys:String>
     <sys:String x:Key="CloseApp">关闭程序</sys:String>
     <sys:String x:Key="GoIndex">返回首页</sys:String>
     <sys:String x:Key="Feedback">去论坛反馈</sys:String>

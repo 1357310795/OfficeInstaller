@@ -40,8 +40,9 @@ namespace OfficeInstaller.Pages
             }
         }
 
-        private bool result;
-        
+        private bool insresult;
+        private bool actresult;
+        public bool onlyact;
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
@@ -55,10 +56,22 @@ namespace OfficeInstaller.Pages
             StateService.IsRunning = true;
             Install();
             StateService.IsRunning = false;
-            if (result)
-                this.Dispatcher.Invoke(() => {
-                    Navigation.Navigate(new ResultPage());
-                });
+            if (insresult)
+            {
+                if (actresult)
+                {
+                    this.Dispatcher.Invoke(() => {
+                        Navigation.Navigate(new ResultPage());
+                    });
+                }
+                else
+                {
+                    this.Dispatcher.Invoke(() => {
+                        LogService.Logs = Logs.ToList();
+                        Navigation.Navigate(new ResultPageActFail());
+                    });
+                }
+            }
             else
             {
                 this.Dispatcher.Invoke(() => { 
@@ -73,54 +86,57 @@ namespace OfficeInstaller.Pages
             string filepath = "";
             var vlmcspath = Path.Combine(Config.Default.DataPath, @"vlmcs.exe");
             var setuppath = Path.Combine(Config.Default.DataPath, @"setup.exe");
-            
             var tmpfolder = Path.GetTempPath();
 
-            AddLog(LangHelper.GetStr("InstallStart"));
+            if (!onlyact)
+            {
+                AddLog(LangHelper.GetStr("InstallStart"));
+                try
+                {
+                    AddLog(LangHelper.GetStr("ExportConfig"));
+                    var xml = Config.Default.GetXml();
+                    filepath = Path.Combine(tmpfolder, "config.xml");
+                    xml.Save(filepath);
+                    AddLog($"{LangHelper.GetStr("ExportConfigSucc")}{filepath}");
+                }
+                catch (Exception ex)
+                {
+                    AddLog($"{LangHelper.GetStr("ExportConfigFail")}\n{ex.Message}");
+                    return;
+                }
 
-            try
-            {
-                AddLog(LangHelper.GetStr("ExportConfig"));
-                var xml = Config.Default.GetXml();
-                filepath = Path.Combine(tmpfolder, "config.xml");
-                xml.Save(filepath);
-                AddLog($"{LangHelper.GetStr("ExportConfigSucc")}{filepath}");
+                Process p = null;
+                try
+                {
+                    ProcessStartInfo psi = new ProcessStartInfo();
+                    psi.Arguments = "/configure " + filepath;
+                    AddLog($"{LangHelper.GetStr("SetupPath")}{setuppath}");
+                    psi.FileName = setuppath;
+                    psi.CreateNoWindow = true;
+                    psi.WindowStyle = ProcessWindowStyle.Hidden;
+                    p = Process.Start(psi);
+                    AddLog(LangHelper.GetStr("LaunchSucc"));
+                }
+                catch (Exception ex)
+                {
+                    AddLog($"{LangHelper.GetStr("LaunchFail")}\n{ex.Message}");
+                    return;
+                }
+                try
+                {
+                    p.WaitForExit();
+                    if (p.ExitCode != 0)
+                        throw new Exception(LangHelper.GetStr("SetupReturnNonZero"));
+                    AddLog(LangHelper.GetStr("InstallSucc"));
+                }
+                catch (Exception ex)
+                {
+                    AddLog($"{LangHelper.GetStr("InstallFail")}\n{ex.Message}");
+                    return;
+                }
             }
-            catch (Exception ex)
-            {
-                AddLog($"{LangHelper.GetStr("ExportConfigFail")}\n{ex.Message}");
-                return;
-            }
+            insresult = true;
 
-            Process p = null;
-            try
-            {
-                ProcessStartInfo psi = new ProcessStartInfo();
-                psi.Arguments = "/configure " + filepath;
-                AddLog($"{LangHelper.GetStr("SetupPath")}{setuppath}");
-                psi.FileName = setuppath;
-                psi.CreateNoWindow = true;
-                psi.WindowStyle = ProcessWindowStyle.Hidden;
-                p = Process.Start(psi);
-                AddLog(LangHelper.GetStr("LaunchSucc"));
-            }
-            catch (Exception ex)
-            {
-                AddLog($"{LangHelper.GetStr("LaunchFail")}\n{ex.Message}");
-                return;
-            }
-            try
-            {
-                p.WaitForExit();
-                if (p.ExitCode != 0)
-                    throw new Exception(LangHelper.GetStr("SetupReturnNonZero"));
-                AddLog(LangHelper.GetStr("InstallSucc"));
-            }
-            catch (Exception ex)
-            {
-                AddLog($"{LangHelper.GetStr("InstallFail")}\n{ex.Message}");
-                return;
-            }
             try
             {
                 AddLog(LangHelper.GetStr("CheckKMS"));
@@ -167,7 +183,7 @@ namespace OfficeInstaller.Pages
                 AddLog($"{LangHelper.GetStr("ActFail")}\n{ex.Message}");
                 return;
             }
-            result = true;
+            actresult = true;
         }
 
         public void AddLog(string str)
