@@ -39,6 +39,11 @@ namespace OfficeInstaller.Helpers
             else
                 return Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
         }
+
+        public static string GetProgramFilesX86()
+        {
+            return Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
+        }
     }
 
 }

@@ -166,7 +166,12 @@ namespace OfficeInstaller.Pages
                 CommandRunner cr = new CommandRunner("cscript");
                 string ospppath = Path.Combine(OSHelper.GetProgramFiles(), @"Microsoft Office\Office16\ospp.vbs");
                 if (!File.Exists(ospppath))
-                    throw new Exception($"{LangHelper.GetStr("OSPP")}{ospppath}");
+                {
+                    ospppath = Path.Combine(OSHelper.GetProgramFilesX86(), @"Microsoft Office\Office16\ospp.vbs");
+                    if (!File.Exists(ospppath))
+                        throw new Exception($"{LangHelper.GetStr("OSPP")}{ospppath}");
+                }
+                    
                 var res = cr.Run($"\"{ospppath}\" /sethst:kms.sjtu.edu.cn");
                 if (res != null && res.ToLower().Contains("success"))
                 {
