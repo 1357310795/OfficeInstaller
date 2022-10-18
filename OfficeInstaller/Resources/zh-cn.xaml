@@ -3,6 +3,7 @@
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="WindowTitle">SJTU 正版软件 - Office 2021 一键安装工具</sys:String>
     <sys:String x:Key="HomeTip">建议连接到交大校园网，以便直接激活 Office</sys:String>
+    <sys:String x:Key="OverwriteTip">请选择所有需要的产品！程序将卸载所有已安装的产品，并安装勾选的产品！</sys:String>
     
     <sys:String x:Key="SelectProducts">产品选择</sys:String>
     <sys:String x:Key="InstallAndAct">一键安装并激活</sys:String>

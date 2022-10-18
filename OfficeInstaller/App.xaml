@@ -8,6 +8,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/zh-cn.xaml" />
+                <!--<ResourceDictionary Source="Resources/en-us.xaml" />-->
                 <ResourceDictionary Source="Resources/Dictionary1.xaml" />
                 <ResourceDictionary Source="Styles/Buttons.xaml" />
                 <ResourceDictionary Source="Styles/CheckBoxs.xaml" />
