@@ -100,12 +100,10 @@
     <Compile Include="Controls\ClippingBorder.cs" />
     <Compile Include="Helpers\CommandRunner.cs" />
     <Compile Include="Helpers\LangHelper.cs" />
+    <Compile Include="Helpers\OfficeHelper.cs" />
     <Compile Include="Helpers\OSHelper.cs" />
     <Compile Include="Pages\ResultPageActFail.xaml.cs">
       <DependentUpon>ResultPageActFail.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\ResultPageFail.xaml.cs">
-      <DependentUpon>ResultPageFail.xaml</DependentUpon>
     </Compile>
     <Compile Include="Services\CancelService.cs" />
     <Compile Include="Services\Config.cs" />
@@ -128,10 +126,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\ResultPageActFail.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Pages\ResultPageFail.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -224,11 +218,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Data\vlmcs.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Data\setup.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

@@ -26,7 +26,6 @@
                    FontSize="48" FontFamily="Microsoft Yahei UI Light" />
         <ListBox Margin="10,20"
                  Grid.Row="2"
-                 ItemContainerStyle="{DynamicResource ListBoxItemContainerStyle1}"
                  Style="{DynamicResource ListBoxStyle1}"
                  ItemsSource="{Binding Logs}" />
         <StackPanel HorizontalAlignment="Center"

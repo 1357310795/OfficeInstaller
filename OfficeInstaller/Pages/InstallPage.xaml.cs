@@ -40,7 +40,6 @@ namespace OfficeInstaller.Pages
             }
         }
 
-        private bool insresult;
         private bool actresult;
         public bool onlyact;
 
@@ -56,27 +55,17 @@ namespace OfficeInstaller.Pages
             StateService.IsRunning = true;
             Install();
             StateService.IsRunning = false;
-            if (insresult)
+            if (actresult)
             {
-                if (actresult)
-                {
-                    this.Dispatcher.Invoke(() => {
-                        Navigation.Navigate(new ResultPage());
-                    });
-                }
-                else
-                {
-                    this.Dispatcher.Invoke(() => {
-                        LogService.Logs = Logs.ToList();
-                        Navigation.Navigate(new ResultPageActFail());
-                    });
-                }
+                this.Dispatcher.Invoke(() => {
+                    Navigation.Navigate(new ResultPage());
+                });
             }
             else
             {
-                this.Dispatcher.Invoke(() => { 
+                this.Dispatcher.Invoke(() => {
                     LogService.Logs = Logs.ToList();
-                    Navigation.Navigate(new ResultPageFail()); 
+                    Navigation.Navigate(new ResultPageActFail());
                 });
             }
         }
@@ -85,57 +74,6 @@ namespace OfficeInstaller.Pages
         {
             string filepath = "";
             var vlmcspath = Path.Combine(Config.Default.DataPath, @"vlmcs.exe");
-            var setuppath = Path.Combine(Config.Default.DataPath, @"setup.exe");
-
-            if (!onlyact)
-            {
-                AddLog(LangHelper.GetStr("InstallStart"));
-                try
-                {
-                    AddLog(LangHelper.GetStr("ExportConfig"));
-                    var xml = Config.Default.GetXml();
-                    filepath = Path.Combine(Config.Default.DataPath, "config.xml");
-                    xml.Save(filepath);
-                    AddLog($"{LangHelper.GetStr("ExportConfigSucc")}{filepath}");
-                }
-                catch (Exception ex)
-                {
-                    AddLog($"{LangHelper.GetStr("ExportConfigFail")}\n{ex.Message}");
-                    return;
-                }
-
-                Process p = null;
-                try
-                {
-                    ProcessStartInfo psi = new ProcessStartInfo();
-                    psi.Arguments = $"/configure \"{filepath}\"";
-                    AddLog($"{LangHelper.GetStr("SetupPath")}{setuppath}");
-                    psi.FileName = setuppath;
-                    psi.CreateNoWindow = true;
-                    psi.WindowStyle = ProcessWindowStyle.Hidden;
-                    p = Process.Start(psi);
-                    AddLog(LangHelper.GetStr("LaunchSucc"));
-                }
-                catch (Exception ex)
-                {
-                    AddLog($"{LangHelper.GetStr("LaunchFail")}\n{ex.Message}");
-                    return;
-                }
-                try
-                {
-                    p.WaitForExit();
-                    if (p.ExitCode != 0)
-                        throw new Exception(LangHelper.GetStr("SetupReturnNonZero"));
-                    AddLog(LangHelper.GetStr("InstallSucc"));
-                }
-                catch (Exception ex)
-                {
-                    AddLog($"{LangHelper.GetStr("InstallFail")}\n{ex.Message}");
-                    return;
-                }
-            }
-            insresult = true;
-
             try
             {
                 AddLog(LangHelper.GetStr("CheckKMS"));
@@ -151,12 +89,41 @@ namespace OfficeInstaller.Pages
                 {
                     AddLog(res);
                     AddLog(LangHelper.GetStr("KMSUnavail"));
+                    return;
                     StateService.KMSOK = false;
                 }
             }
             catch (Exception ex)
             {
                 AddLog($"{LangHelper.GetStr("CheckKMSFail")}\n{ex.Message}");
+                return;
+            }
+            try
+            {
+                AddLog(LangHelper.GetStr("SettingKMS"));
+                CommandRunner cr = new CommandRunner("cscript");
+                string ospppath = Path.Combine(OSHelper.GetProgramFiles(), @"Microsoft Office\Office16\ospp.vbs");
+                if (!File.Exists(ospppath))
+                {
+                    ospppath = Path.Combine(OSHelper.GetProgramFilesX86(), @"Microsoft Office\Office16\ospp.vbs");
+                    if (!File.Exists(ospppath))
+                        throw new Exception($"{LangHelper.GetStr("OSPP")}{ospppath}");
+                }
+
+                var res = cr.Run($"\"{ospppath}\" /sethst:kms.sjtu.edu.cn");
+                if (res != null && res.ToLower().Contains("success"))
+                {
+                    AddLog(res);
+                    AddLog(LangHelper.GetStr("ActSucc"));
+                }
+                else
+                {
+                    throw new Exception(res);
+                }
+            }
+            catch (Exception ex)
+            {
+                AddLog($"{LangHelper.GetStr("ActFail")}\n{ex.Message}");
                 return;
             }
             try
@@ -171,7 +138,7 @@ namespace OfficeInstaller.Pages
                         throw new Exception($"{LangHelper.GetStr("OSPP")}{ospppath}");
                 }
                     
-                var res = cr.Run($"\"{ospppath}\" /sethst:kms.sjtu.edu.cn");
+                var res = cr.Run($"\"{ospppath}\" /act");
                 if (res != null && res.ToLower().Contains("success"))
                 {
                     AddLog(res);

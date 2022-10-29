@@ -25,30 +25,11 @@ namespace OfficeInstaller
 
             var path = System.AppDomain.CurrentDomain.BaseDirectory;
             var vlmcs = Path.Combine(path, @"data\vlmcs.exe");
-            var setup = Path.Combine(path, @"data\setup.exe");
             if (!File.Exists(vlmcs))
             {
-                if (!File.Exists(setup))
-                {
-                    MessageBox.Show("请先解压整个文件夹，再运行程序！");
-                    App.Current.Shutdown();
-                    return;
-                }
-                else
-                {
-                    MessageBox.Show("文件丢失，请重新下载、解压整个文件夹，再运行程序！");
-                    App.Current.Shutdown();
-                    return;
-                }
-            }
-            else
-            {
-                if (!File.Exists(setup))
-                {
-                    MessageBox.Show("文件丢失，请重新下载、解压整个文件夹，再运行程序！");
-                    App.Current.Shutdown();
-                    return;
-                }
+                MessageBox.Show("文件丢失，请解压整个文件夹，再运行程序！");
+                App.Current.Shutdown();
+                return;
             }
             try
             {
@@ -56,7 +37,6 @@ namespace OfficeInstaller
                 Config.Default.DataPath = tmppath;
                 Directory.CreateDirectory(tmppath);
                 File.Copy(vlmcs, Path.Combine(tmppath, "vlmcs.exe"));
-                File.Copy(setup, Path.Combine(tmppath, "setup.exe"));
             }
             catch (Exception ex)
             {

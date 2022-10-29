@@ -2,29 +2,19 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib"
                     xml:space="preserve">
-    <sys:String x:Key="WindowTitle">SJTU Software Licensing Center - Office 2021 OneKey Install Tool - Offline Version</sys:String>
-    <sys:String x:Key="HomeTip">It is recommended to connect to the campus network in order to activate Office directly.</sys:String>
-    <sys:String x:Key="OverwriteTip">Please select all desired products! The program will uninstall all the installed products and install the checked ones!</sys:String>
-    <sys:String x:Key="OfflineInstall">Offline</sys:String>
+    <sys:String x:Key="WindowTitle">SJTU Software Licensing Center - Office 2021 OneKey Activate Tool</sys:String>
+    <sys:String x:Key="HomeTip">Please connect to the campus network.</sys:String>
+    <sys:String x:Key="OnlyAct">Activate-Only</sys:String>
+    <sys:String x:Key="InstalledProducts">Installed Products</sys:String>
 
     <sys:String x:Key="SelectProducts">Select Products</sys:String>
-    <sys:String x:Key="InstallAndAct">Install &amp; Activate</sys:String>
-    <sys:String x:Key="Installing">Installing Office</sys:String>
-    <sys:String x:Key="InstallTip">The installation process cannot be cancelled, please be patient! Please do not power off your computer!</sys:String>
-    <sys:String x:Key="InstallStart">Installation Start</sys:String>
-    <sys:String x:Key="ExportConfig">Exporting configuration files</sys:String>
-    <sys:String x:Key="ExportConfigSucc">Exporting configuration files successfully: </sys:String>
-    <sys:String x:Key="ExportConfigFail">Failed to export configuration files!</sys:String>
-    <sys:String x:Key="ExtractExe">Extracting resources</sys:String>
-    <sys:String x:Key="ExtractExeSucc">Extracting resources successfully!</sys:String>
-    <sys:String x:Key="ExtractExeFail">Failed to extract resources!</sys:String>
-    <sys:String x:Key="SetupPath">Path of Setup.exe: </sys:String>
-    <sys:String x:Key="LaunchSucc">Setup.exe started successfully</sys:String>
-    <sys:String x:Key="LaunchFail">Failed to start Setup.exe!</sys:String>
-    <sys:String x:Key="SetupReturnNonZero">Setup.exe returns a non-zero value</sys:String>
-    <sys:String x:Key="InstallSucc">Installation completed!</sys:String>
-    <sys:String x:Key="InstallFail">Installation failed!</sys:String>
+    <sys:String x:Key="InstallAndAct">Activate</sys:String>
+    <sys:String x:Key="Installing">Activating Office</sys:String>
+    <sys:String x:Key="InstallTip">The Activation process cannot be cancelled, please be patient! Please do not power off your computer!</sys:String>
+    <sys:String x:Key="InstallStart">Activation Start</sys:String>
+    
     <sys:String x:Key="CheckKMS">Checking KMS server availability</sys:String>
+    <sys:String x:Key="SettingKMS">Applying KMS settings</sys:String>
     <sys:String x:Key="KMSAvail">KMS server available!</sys:String>
     <sys:String x:Key="KMSUnavail">KMS server unavailable!</sys:String>
     <sys:String x:Key="CheckKMSFail">Failed to check KMS server availability!</sys:String>
@@ -40,8 +30,11 @@
     <sys:String x:Key="GoIndex">Back home</sys:String>
     <sys:String x:Key="Feedback">Feedback</sys:String>
 
-    <sys:String x:Key="InstalledAndActed">Office is installed and activated</sys:String>
+    <sys:String x:Key="InstalledAndActed">Office is activated</sys:String>
     <sys:String x:Key="InstalledAndActedTip">If it says not activated, please connect to the campus network and restart the Office application.</sys:String>
-    <sys:String x:Key="Installed">Office is installed</sys:String>
-    <sys:String x:Key="InstalledTip">Currently the SJTU KMS server is not available, please connect to the campus network and the Office application will be activated automatically.</sys:String>
+    
+    <sys:String x:Key="Warning">Warning</sys:String>
+    <sys:String x:Key="NoInstalled">No installed Office products are detected, please install Office first</sys:String>
+    <sys:String x:Key="NotSupported">The following Office products were detected as not supporting activation by this method.</sys:String>
+    <sys:String x:Key="Continue">Continue?</sys:String>
 </ResourceDictionary>

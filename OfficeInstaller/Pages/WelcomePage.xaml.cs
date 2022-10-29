@@ -2,6 +2,7 @@
 using OfficeInstaller.Services;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,16 +21,47 @@ namespace OfficeInstaller.Pages
     /// <summary>
     /// WelcomePage.xaml 的交互逻辑
     /// </summary>
-    public partial class WelcomePage : Page
+    public partial class WelcomePage : Page, INotifyPropertyChanged
     {
         public WelcomePage()
         {
             InitializeComponent();
-            this.DataContext = Config.Default;
+            this.DataContext = this;
         }
+
+        private List<string> products;
+
+        public List<string> Products
+        {
+            get { return products; }
+            set
+            {
+                products = value;
+                this.RaisePropertyChanged("Products");
+            }
+        }
+
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            if (Products == null)
+            {
+                var res = MessageBox.Show(LangHelper.GetStr("NoInstalled"), LangHelper.GetStr("Warning"), MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+            var unsupported = "";
+            foreach (var pro in Products)
+            {
+                if (pro != "ProPlus2021Volume" && pro != "VisioPro2021Volume" && pro != "ProjectPro2021Volume")
+                    unsupported += pro + "\n";
+            }
+            if (unsupported != "")
+            {
+                var res = MessageBox.Show(LangHelper.GetStr("NotSupported") + "\n" + unsupported + "-------\n" + LangHelper.GetStr("Continue"), LangHelper.GetStr("Warning"), MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                if (res != MessageBoxResult.Yes)
+                    return;
+            }
+                
             Navigation.Navigate(new InstallPage());
         }
 
@@ -42,5 +74,26 @@ namespace OfficeInstaller.Pages
         {
             LangHelper.ChangeLang(false);
         }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            Products = OfficeHelper.GetInstalledProducts();
+        }
+
+        #region INotifyPropertyChanged members
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void RaisePropertyChanged(string propertyName)
+        {
+            PropertyChangedEventHandler handler = this.PropertyChanged;
+            if (handler != null)
+            {
+                var e = new PropertyChangedEventArgs(propertyName);
+                handler(this, e);
+            }
+        }
+
+        #endregion
     }
 }

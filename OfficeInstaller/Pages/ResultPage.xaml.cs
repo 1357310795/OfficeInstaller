@@ -27,16 +27,8 @@ namespace OfficeInstaller.Pages
         {
             InitializeComponent();
             this.DataContext = this;
-            if (StateService.KMSOK)
-            {
-                Message = LangHelper.GetStr("InstalledAndActed");
-                Info = LangHelper.GetStr("InstalledAndActedTip");
-            }
-            else
-            {
-                Message = LangHelper.GetStr("Installed");
-                Info = LangHelper.GetStr("InstalledTip");
-            } 
+            Message = LangHelper.GetStr("InstalledAndActed");
+            Info = LangHelper.GetStr("InstalledAndActedTip");
         }
 
         private string message;
