@@ -86,7 +86,6 @@ namespace OfficeInstaller.Pages
             string filepath = "";
             var vlmcspath = Path.Combine(Config.Default.DataPath, @"vlmcs.exe");
             var setuppath = Path.Combine(Config.Default.DataPath, @"setup.exe");
-            var tmpfolder = Path.GetTempPath();
 
             if (!onlyact)
             {
@@ -95,7 +94,7 @@ namespace OfficeInstaller.Pages
                 {
                     AddLog(LangHelper.GetStr("ExportConfig"));
                     var xml = Config.Default.GetXml();
-                    filepath = Path.Combine(tmpfolder, "config.xml");
+                    filepath = Path.Combine(Config.Default.DataPath, "config.xml");
                     xml.Save(filepath);
                     AddLog($"{LangHelper.GetStr("ExportConfigSucc")}{filepath}");
                 }
@@ -109,7 +108,7 @@ namespace OfficeInstaller.Pages
                 try
                 {
                     ProcessStartInfo psi = new ProcessStartInfo();
-                    psi.Arguments = "/configure " + filepath;
+                    psi.Arguments = $"/configure \"{filepath}\"";
                     AddLog($"{LangHelper.GetStr("SetupPath")}{setuppath}");
                     psi.FileName = setuppath;
                     psi.CreateNoWindow = true;

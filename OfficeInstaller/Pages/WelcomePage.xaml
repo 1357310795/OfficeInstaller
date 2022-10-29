@@ -35,7 +35,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"
-                    Margin="0,0,0,20"
+                    Margin="16,0,0,20"
                     Orientation="Horizontal">
             <Image Source="{StaticResource officeDrawingImage}" />
             <TextBlock VerticalAlignment="Center"
@@ -43,6 +43,11 @@
                        Foreground="#cf3900"
                        Text="Office"
                        FontSize="50" FontFamily="Segeo UI Light" />
+            <TextBlock VerticalAlignment="Bottom"
+                       Margin="4,0,0,18"
+                       Foreground="#cf3900"
+                       Text="{DynamicResource OfflineInstall}"
+                       FontSize="12"/>
         </StackPanel>
         <Grid HorizontalAlignment="Center" Grid.Row="1">
             <Border Width="380"

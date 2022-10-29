@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,6 +50,9 @@ namespace OfficeInstaller.Services
             XmlElement add = doc.CreateElement("Add");
             add.SetAttribute("OfficeClientEdition", "64");
             add.SetAttribute("Channel", "PerpetualVL2021");
+            var basepath = System.AppDomain.CurrentDomain.BaseDirectory;
+            add.SetAttribute("SourcePath", Path.Combine(basepath, "Data"));
+            add.SetAttribute("Version", "16.0.14332.20400");
 
             XmlElement main = doc.CreateElement("Product");
             main.SetAttribute("ID", "ProPlus2021Volume");
