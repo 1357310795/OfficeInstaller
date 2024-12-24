@@ -83,7 +83,7 @@ namespace OfficeInstaller.Pages
 
         public void Install()
         {
-            string filepath = "";
+            string filepath = Path.GetTempFileName();
             var vlmcspath = Path.Combine(Config.Default.DataPath, @"vlmcs.exe");
             var setuppath = Path.Combine(Config.Default.DataPath, @"setup.exe");
 
@@ -94,7 +94,6 @@ namespace OfficeInstaller.Pages
                 {
                     AddLog(LangHelper.GetStr("ExportConfig"));
                     var xml = Config.Default.GetXml();
-                    filepath = Path.Combine(Config.Default.DataPath, "config.xml");
                     xml.Save(filepath);
                     AddLog($"{LangHelper.GetStr("ExportConfigSucc")}{filepath}");
                 }
