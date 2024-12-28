@@ -63,7 +63,7 @@ namespace OfficeInstaller.Pages
 
         private void ButtonFeedback_Click(object sender, RoutedEventArgs e)
         {
-            Process.Start("explorer", "https://shuiyuan.sjtu.edu.cn/c/23-category/106-category/106");
+            Process.Start("explorer", "https://shuiyuan.sjtu.edu.cn/c/campus-life/genuine-software/106");
         }
     }
 }

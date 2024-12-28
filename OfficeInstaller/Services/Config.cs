@@ -50,9 +50,6 @@ namespace OfficeInstaller.Services
             XmlElement add = doc.CreateElement("Add");
             add.SetAttribute("OfficeClientEdition", "64");
             add.SetAttribute("Channel", "PerpetualVL2024");
-            var basepath = System.AppDomain.CurrentDomain.BaseDirectory;
-            add.SetAttribute("SourcePath", Path.Combine(basepath, "Data"));
-            add.SetAttribute("Version", "16.0.17932.20190");
 
             XmlElement main = doc.CreateElement("Product");
             main.SetAttribute("ID", "ProPlus2024Volume");
