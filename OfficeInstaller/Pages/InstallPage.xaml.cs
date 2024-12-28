@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Management;
 using System.Reflection;
 using System.Text;
 using System.Threading;
@@ -160,6 +161,30 @@ namespace OfficeInstaller.Pages
             }
             try
             {
+                // 创建WMI会话
+                ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM SoftwareLicensingService");
+                ManagementObject obj = searcher.Get().Cast<ManagementObject>().First();
+
+                // 获取产品密钥，这里假设你已经有了产品密钥
+                string productKey = "XJ2XN-FW8RK-P4HMP-DKDBV-GCVGB"; // 替换为你的产品密钥
+
+                // 准备方法参数
+                ManagementBaseObject inParams = obj.GetMethodParameters("InstallProductKey");
+                inParams["ProductKey"] = productKey;
+
+                // 调用InstallProductKey方法
+                ManagementBaseObject outParams = obj.InvokeMethod("InstallProductKey", inParams, null);
+
+                //Refresh
+                obj.InvokeMethod("RefreshLicenseStatus", null, null);
+            }
+            catch(Exception ex)
+            {
+                AddLog($"{ex.ToString()}");
+                return;
+            }
+            try
+            {
                 AddLog(LangHelper.GetStr("Activating"));
                 CommandRunner cr = new CommandRunner("cscript");
                 string ospppath = Path.Combine(OSHelper.GetProgramFiles(), @"Microsoft Office\Office16\ospp.vbs");
@@ -169,7 +194,7 @@ namespace OfficeInstaller.Pages
                     if (!File.Exists(ospppath))
                         throw new Exception($"{LangHelper.GetStr("OSPP")}{ospppath}");
                 }
-                    
+
                 var res = cr.Run($"\"{ospppath}\" /sethst:kms.sjtu.edu.cn");
                 if (res != null && res.ToLower().Contains("success"))
                 {

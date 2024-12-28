@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib"
                     xml:space="preserve">
-    <sys:String x:Key="WindowTitle">SJTU Software Licensing Center - Office 2021 OneKey Install Tool - Offline Version</sys:String>
+    <sys:String x:Key="WindowTitle">SJTU Software Licensing Center - Office 2024 OneKey Install Tool - Offline Version</sys:String>
     <sys:String x:Key="HomeTip">It is recommended to connect to the campus network in order to activate Office directly.</sys:String>
     <sys:String x:Key="OverwriteTip">Please select all desired products! The program will uninstall all the installed products and install the checked ones!</sys:String>
     <sys:String x:Key="OfflineInstall">Offline</sys:String>

@@ -49,13 +49,13 @@ namespace OfficeInstaller.Services
             XmlElement root = doc.CreateElement("Configuration");
             XmlElement add = doc.CreateElement("Add");
             add.SetAttribute("OfficeClientEdition", "64");
-            add.SetAttribute("Channel", "PerpetualVL2021");
+            add.SetAttribute("Channel", "PerpetualVL2024");
             var basepath = System.AppDomain.CurrentDomain.BaseDirectory;
             add.SetAttribute("SourcePath", Path.Combine(basepath, "Data"));
-            add.SetAttribute("Version", "16.0.14332.20400");
+            add.SetAttribute("Version", "16.0.17932.20190");
 
             XmlElement main = doc.CreateElement("Product");
-            main.SetAttribute("ID", "ProPlus2021Volume");
+            main.SetAttribute("ID", "ProPlus2024Volume");
             main.AppendChild(GetLangNode(doc));
             add.AppendChild(main);
 
@@ -73,7 +73,7 @@ namespace OfficeInstaller.Services
             if (Visio)
             {
                 XmlElement visio = doc.CreateElement("Product");
-                visio.SetAttribute("ID", "VisioPro2021Volume");
+                visio.SetAttribute("ID", "VisioPro2024Volume");
                 visio.AppendChild(GetLangNode(doc));
                 add.AppendChild(visio);
             }
@@ -81,7 +81,7 @@ namespace OfficeInstaller.Services
             if (Project)
             {
                 XmlElement project = doc.CreateElement("Product");
-                project.SetAttribute("ID", "ProjectPro2021Volume");
+                project.SetAttribute("ID", "ProjectPro2024Volume");
                 project.AppendChild(GetLangNode(doc));
                 add.AppendChild(project);
             }
